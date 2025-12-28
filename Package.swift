@@ -3,6 +3,11 @@
 
 import PackageDescription
 
+let dependencies: [Target.Dependency] = [
+  .product(name: "Algorithms", package: "swift-algorithms"),
+  .product(name: "Collections", package: "swift-collections"),
+]
+
 let package = Package(
     name: "WordleGrep",
     products: [
@@ -12,11 +17,20 @@ let package = Package(
             targets: ["WordleGrep"]
         ),
     ],
+    dependencies: [
+        .package(
+          url: "https://github.com/apple/swift-algorithms.git",
+          .upToNextMajor(from: "1.2.0")),
+        .package(
+          url: "https://github.com/apple/swift-collections.git",
+          .upToNextMajor(from: "1.1.4"))
+    ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
         // Targets can depend on other targets in this package and products from dependencies.
         .target(
-            name: "WordleGrep"
+            name: "WordleGrep",
+            dependencies: dependencies
         ),
         .testTarget(
             name: "WordleGrepTests",

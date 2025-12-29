@@ -8,7 +8,7 @@
 import Foundation
 
 extension Sequence where Element == String {
-    func filter(wordle pattern: WordleWord) -> any Sequence<String> {
+    public func filter(wordle pattern: WordleWord) -> any Sequence<String> {
         return filter { element in element.matches(wordle: pattern) }
     }
 }

@@ -3,12 +3,16 @@
 
 import Algorithms
 
-enum WordleChar {
+public enum WordleChar {
     case Green(char: Character)
     case Yellow(char: Character)
     case Black(char: Character)
     case Unknown
 }
+
+extension WordleChar: Equatable {}
+
+extension WordleChar: Sendable {}
 
 extension WordleChar {
     static let modifiers: Set<Character> = ["!", "?"]
@@ -43,26 +47,10 @@ extension WordleChar {
 
 }
 
-
-func g(_ character: Character) -> WordleChar {
-    return WordleChar.Green(char: character)
-}
-func y(_ character: Character) -> WordleChar {
-    return WordleChar.Yellow(char: character)
-}
-func b(_ character: Character) -> WordleChar {
-    return WordleChar.Black(char: character)
-}
-func u() -> WordleChar {
-    return WordleChar.Unknown
-}
-
-extension WordleChar: Equatable {}
-
-typealias WordleWord = [WordleChar]
+public typealias WordleWord = [WordleChar]
 
 extension WordleWord {
-    init(from string: String) {
+    public init(from string: String) {
         var result: [WordleChar] = []
         result = string.adjacentPairs().compactMap { (char, nextChar) in
             WordleChar(from: char, modifier: nextChar)
@@ -75,7 +63,7 @@ extension WordleWord {
 }
 
 extension String {
-    func matches(wordle pattern: WordleWord) -> Bool {
+    public func matches(wordle pattern: WordleWord) -> Bool {
         guard self.count == pattern.count else { return false }
         let charSet = Set(self)
         return zip(self, pattern).allSatisfy { (element, wordleChar) in
@@ -87,6 +75,5 @@ extension String {
             }
         }
     }
-
 }
 

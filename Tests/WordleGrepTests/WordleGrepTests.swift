@@ -55,8 +55,9 @@ func matches(wordle stringPattern: String, word: String, comment: Comment) async
         (["aaa", "aab", "aba", "baa", "abb", "bba", "bbb"], WordleWord.init(from: "a__"), ["aaa", "aab", "aba", "abb"]),
         (["aaa", "aab", "aba", "baa", "abb", "bba", "bbb"], WordleWord.init(from: "__b"), ["aab", "abb", "bbb"]),
         (["aaa", "aab", "aba", "baa", "abb", "bba", "bbb"], WordleWord.init(from: "__b?"), ["aba", "baa", "bba"]),
-        (["aaa", "aab", "aba", "baa", "abb", "bba", "bbb"], WordleWord.init(from: "_a!b?"), ["aba", "bba"]),
-        (["aaa", "aab", "aba", "baa", "abb", "bba", "bbb"], WordleWord.init(from: "b!a!b?"), ["aba"])
+        (["aaa", "aab", "aba", "baa", "abb", "bba", "bbb"], WordleWord.init(from: "__b!"), ["aaa"]),
+        (["aaa", "aab", "aba", "baa", "abb", "bba", "bbb"], WordleWord.init(from: "_a!b?"), []),
+        (["aaa", "aab", "aba", "baa", "abb", "bba", "bbb"], WordleWord.init(from: "b!a!b?"), [])
     ]
 )
 func filter(collection: [String], wordle pattern: WordleWord, result: [String]) {

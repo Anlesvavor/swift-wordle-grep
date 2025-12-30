@@ -4,13 +4,15 @@ import Testing
 @Test(
     "init WordleChar from String",
     arguments: [
-        ("x", WordleChar.Green(char: "x")),
-        ("x!", WordleChar.Black(char: "x")),
-        ("x?", WordleChar.Yellow(char: "x")),
-        ("_", WordleChar.Unknown)
+        ("x", WordleChar.Green(char: "x"), "Green"),
+        ("x!", WordleChar.Black(char: "x"), "Black"),
+        ("x?", WordleChar.Yellow(char: "x"), "Yellow"),
+        ("_", WordleChar.Unknown, "Blank"),
+        ("x^", WordleChar.Black(char: "x"), "Black (alternate)"),
+        ("x*", WordleChar.Yellow(char: "x"), "Yellow (alternate)"),
     ]
 )
-func initFrom(string: String, expected: WordleChar) async throws {
+func initFrom(string: String, expected: WordleChar, comment: Comment) async throws {
     #expect(WordleChar.init(from: string) == expected)
 }
 
@@ -50,6 +52,17 @@ func matches(wordle stringPattern: String, word: String, comment: Comment) async
 
 
 @Test(
+    "'matches(wordle: [WordleWord])' function",
+    arguments: [
+        (["w!h!o!r?e!", "t?ri?a!l!"], "fruit")
+    ]
+)
+func matches(wordle stringPatterns: [String], word: String) async throws {
+    #expect(word.matches(wordle: stringPatterns.map({ WordleWord(from: $0) })))
+}
+
+
+@Test(
     "filter(wordle pattern) -> any Sequence<String>",
     arguments: [
         (["aaa", "aab", "aba", "baa", "abb", "bba", "bbb"], WordleWord.init(from: "a__"), ["aaa", "aab", "aba", "abb"]),
@@ -63,3 +76,14 @@ func matches(wordle stringPattern: String, word: String, comment: Comment) async
 func filter(collection: [String], wordle pattern: WordleWord, result: [String]) {
     #expect(collection.filter(wordle: pattern).elementsEqual(result))
 }
+
+@Test(
+    "filter(wordle patterns) -> any Sequence<String>",
+    arguments: [
+        (["aaa", "aab", "aba", "baa", "abb", "bba", "bbb"], [WordleWord.init(from: "a__"), WordleWord.init(from: "_b?_")], ["aab"]),
+    ]
+)
+func filter(collection: [String], wordle patterns: [WordleWord], result: [String]) {
+    #expect(collection.filter(wordle: patterns).elementsEqual(result))
+}
+

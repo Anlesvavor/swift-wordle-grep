@@ -11,4 +11,8 @@ extension Sequence where Element == String {
     public func filter(wordle pattern: WordleWord) -> any Sequence<String> {
         return filter { element in element.matches(wordle: pattern) }
     }
+
+    public func filter(wordle patterns: [WordleWord]) -> any Sequence<String> {
+        return filter { element in element.matches(wordle: patterns) }
+    }
 }
